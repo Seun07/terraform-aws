@@ -77,8 +77,8 @@ resource "aws_route_table_association" "private_assoc" {
 
 # EC2 Instance in the Public Subnet
 resource "aws_instance" "web_public" {
-  ami                         = "ami-0c1ac8a41498c1a9c"
-  instance_type               = "t3.micro"
+  ami                         = var.ami
+  instance_type               = var.instance_type
   subnet_id                   = aws_subnet.public_subnet.id
   associate_public_ip_address = true
   user_data                   = file("userdata.sh")
@@ -91,8 +91,8 @@ resource "aws_instance" "web_public" {
 
 # EC2 Instance in the Private Subnet
 resource "aws_instance" "web_private" {
-  ami                    = "ami-0c1ac8a41498c1a9c"
-  instance_type          = "t3.micro"
+  ami                    = var.ami
+  instance_type          = var.instance_type
   subnet_id              = aws_subnet.private_subnet.id
   vpc_security_group_ids = [aws_security_group.allow_web.id]
   key_name               = "blue"
